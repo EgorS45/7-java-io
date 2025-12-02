@@ -15,7 +15,15 @@ public class Task01Main {
     }
 
     public static int checkSumOfStream(InputStream inputStream) throws IOException {
-        // your implementation here
-        return 0;
+        if (inputStream == null) {
+            throw new IllegalArgumentException("InputStream must not be null");
+        }
+
+        int checksum = 0;
+        int nextByte;
+        while ((nextByte = inputStream.read()) != -1) {
+            checksum = Integer.rotateLeft(checksum, 1) ^ nextByte;
+        }
+        return checksum;
     }
 }

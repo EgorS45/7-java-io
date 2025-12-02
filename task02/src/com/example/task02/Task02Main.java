@@ -9,5 +9,33 @@ public class Task02Main {
         // - направить стандартный вывод программы в файл output.test
         // - запустить программу
         // - и сравнить получившийся файл output.test с expected.test
+
+        boolean pendingCarriageReturn = false;
+        int currentByte;
+        while ((currentByte = System.in.read()) != -1) {
+            if (pendingCarriageReturn) {
+                if (currentByte == '\n') {
+                    System.out.write('\n');
+                    pendingCarriageReturn = false;
+                    continue;
+                } else {
+                    System.out.write('\r');
+                    pendingCarriageReturn = false;
+                    // продолжаем обрабатывать текущий байт как новый символ
+                }
+            }
+
+            if (currentByte == '\r') {
+                pendingCarriageReturn = true;
+            } else {
+                System.out.write(currentByte);
+            }
+        }
+
+        if (pendingCarriageReturn) {
+            System.out.write('\r');
+        }
+
+        System.out.flush();
     }
 }
